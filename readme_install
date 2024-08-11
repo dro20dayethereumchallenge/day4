@@ -1,0 +1,320 @@
+sudo apt-get update
+sudo apt-get install -y ca-certificates curl gnupg
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+NODE_MAJOR=22
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+sudo apt-get update
+sudo apt-get install nodejs -y
+npm install web3
+npm install --save-dev @nomiclabs/hardhat-ethers ethers @nomiclabs/hardhat-waffle ethereum-waffle chai
+npm i @openzeppelin/contracts@4.5.0
+
+
+
+npx create-react-app hello
+cd hello
+
+
+npm start
+# set your inbound rule appropriately
+# set a tap to     <dns-from-aws-console>:3000
+# "hello world" should now show up!
+
+
+npx hardhat init
+
+# double check dns
+vi hardhat.config.js
+
+vi contracts/Hello.sol
+
+# double check dns
+vi src/App.js
+
+# from project directory
+mkdir scripts       
+vi scripts/deploy.js
+
+
+terminal one: 
+
+/home/ubuntu/hello   npx hardhat node --hostname ec2-35-86-73-162.us-west-2.compute.amazonaws.com
+
+
+terminal two:
+/home/ubuntu/hello npx   hardhat run scripts/deploy.js --network localhost
+
+/home/ubuntu/hello npm start   
+
+
+
+
+
+
+terminal three: 
+
+ubuntu@ip-172-31-46-232:~/hello/src$ npx hardhat console --network localhost
+Welcome to Node.js v22.6.0.
+Type ".help" for more information.
+> const { ethers } = require("ethers");
+undefined
+>  let NewHelloAbi = require('./contractsData/Hello.json');
+undefined
+> let  HelloAddress = require('./contractsData/Hello-address.json');
+undefined
+> const provider = new ethers.JsonRpcProvider("http://ec2-52-89-102-52.us-west-2.compute.amazonaws.com:8545")
+undefined
+> const contract = new ethers.Contract(HelloAddress.address, NewHelloAbi.abi, provider);
+undefined
+>  const filter = contract.filters.myEventTest(null)
+undefined
+> contract.on(filter, (info) => {  console.log("info",info); });
+Promise {
+  <pending>,
+  [Symbol(async_id_symbol)]: 413,
+  [Symbol(trigger_async_id_symbol)]: 14
+}
+>
+
+
+
+> info ContractEventPayload {
+  filter: PreparedTopicFilter {
+    fragment: EventFragment {
+      type: 'event',
+      inputs: [Array],
+      name: 'myEventTest',
+      anonymous: false
+    }
+  },
+  emitter: Contract {
+    target: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+    interface: Interface {
+      fragments: [Array],
+      deploy: [ConstructorFragment],
+      fallback: null,
+      receive: false
+    },
+    runner: JsonRpcProvider {},
+    filters: {},
+    fallback: null,
+    [Symbol(_ethersInternal_contract)]: {}
+  },
+  log: EventLog {
+    provider: JsonRpcProvider {},
+    transactionHash: '0xa00c5d4ef8ef78da7a8477f5528c524547895e756bad0981bd994370ada07f4e',
+    blockHash: '0x3203302c40747a0ed9d1074b65268860e5c28a8ee7551776f447c092c5bafdde',
+    blockNumber: 3,
+    removed: false,
+    address: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+    data: '0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000106173646661666461667878787878787800000000000000000000000000000000',
+    topics: [
+      '0x319b9e64f64b033d6b8102f9688735cefac53d266b6e85d21cf85e9856fc7b99'
+    ],
+    index: 0,
+    transactionIndex: 0,
+    interface: Interface {
+      fragments: [Array],
+      deploy: [ConstructorFragment],
+      fallback: null,
+      receive: false
+    },
+    fragment: EventFragment {
+      type: 'event',
+      inputs: [Array],
+      name: 'myEventTest',
+      anonymous: false
+    },
+    args: Result(1) [ 'asdfafdafxxxxxxx' ]
+  },
+  args: Result(1) [ 'asdfafdafxxxxxxx' ],
+  fragment: EventFragment {
+    type: 'event',
+    inputs: [ [ParamType] ],
+    name: 'myEventTest',
+    anonymous: false
+  }
+}
+info ContractEventPayload {
+  filter: PreparedTopicFilter {
+    fragment: EventFragment {
+      type: 'event',
+      inputs: [Array],
+      name: 'myEventTest',
+      anonymous: false
+    }
+  },
+  emitter: Contract {
+    target: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+    interface: Interface {
+      fragments: [Array],
+      deploy: [ConstructorFragment],
+      fallback: null,
+      receive: false
+    },
+    runner: JsonRpcProvider {},
+    filters: {},
+    fallback: null,
+    [Symbol(_ethersInternal_contract)]: {}
+  },
+  log: EventLog {
+    provider: JsonRpcProvider {},
+    transactionHash: '0x82bab10aadbcd039018f1f8861c34ebf638605c74ff9a93085966aa613e8af4e',
+    blockHash: '0xd2ce93d70141e655e1685f0901fd3d94ad9b091b2a7890c8f49f64a878e737d6',
+    blockNumber: 4,
+    removed: false,
+    address: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+    data: '0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000036f6e650000000000000000000000000000000000000000000000000000000000',
+    topics: [
+      '0x319b9e64f64b033d6b8102f9688735cefac53d266b6e85d21cf85e9856fc7b99'
+    ],
+    index: 0,
+    transactionIndex: 0,
+    interface: Interface {
+      fragments: [Array],
+      deploy: [ConstructorFragment],
+      fallback: null,
+      receive: false
+    },
+    fragment: EventFragment {
+      type: 'event',
+      inputs: [Array],
+      name: 'myEventTest',
+      anonymous: false
+    },
+    args: Result(1) [ 'one' ]
+  },
+  args: Result(1) [ 'one' ],
+  fragment: EventFragment {
+    type: 'event',
+    inputs: [ [ParamType] ],
+    name: 'myEventTest',
+    anonymous: false
+  }
+}
+info ContractEventPayload {
+  filter: PreparedTopicFilter {
+    fragment: EventFragment {
+      type: 'event',
+      inputs: [Array],
+      name: 'myEventTest',
+      anonymous: false
+    }
+  },
+  emitter: Contract {
+    target: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+    interface: Interface {
+      fragments: [Array],
+      deploy: [ConstructorFragment],
+      fallback: null,
+      receive: false
+    },
+    runner: JsonRpcProvider {},
+    filters: {},
+    fallback: null,
+    [Symbol(_ethersInternal_contract)]: {}
+  },
+  log: EventLog {
+    provider: JsonRpcProvider {},
+    transactionHash: '0x05e18ab8db5307637540d8c4df144eb439849c8b8fd5cc708ea6de0f1a205892',
+    blockHash: '0xd55573b06c557a1afa9e109cfe4736684a08b2d86518939e758424813334770e',
+    blockNumber: 5,
+    removed: false,
+    address: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+    data: '0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000374776f0000000000000000000000000000000000000000000000000000000000',
+    topics: [
+      '0x319b9e64f64b033d6b8102f9688735cefac53d266b6e85d21cf85e9856fc7b99'
+    ],
+    index: 0,
+    transactionIndex: 0,
+    interface: Interface {
+      fragments: [Array],
+      deploy: [ConstructorFragment],
+      fallback: null,
+      receive: false
+    },
+    fragment: EventFragment {
+      type: 'event',
+      inputs: [Array],
+      name: 'myEventTest',
+      anonymous: false
+    },
+    args: Result(1) [ 'two' ]
+  },
+  args: Result(1) [ 'two' ],
+  fragment: EventFragment {
+    type: 'event',
+    inputs: [ [ParamType] ],
+    name: 'myEventTest',
+    anonymous: false
+  }
+}
+info ContractEventPayload {
+  filter: PreparedTopicFilter {
+    fragment: EventFragment {
+      type: 'event',
+      inputs: [Array],
+      name: 'myEventTest',
+      anonymous: false
+    }
+  },
+  emitter: Contract {
+    target: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+    interface: Interface {
+      fragments: [Array],
+      deploy: [ConstructorFragment],
+      fallback: null,
+      receive: false
+    },
+    runner: JsonRpcProvider {},
+    filters: {},
+    fallback: null,
+    [Symbol(_ethersInternal_contract)]: {}
+  },
+  log: EventLog {
+    provider: JsonRpcProvider {},
+    transactionHash: '0xabdfdc3f04645136d8f0cb41e7df02f32cad527fb1618823861a01b45c8ee9ce',
+    blockHash: '0x58d917e7ecff36b1e1a5ac33171a596852112416c79d38a6d8b4ab625fbfcfbd',
+    blockNumber: 6,
+    removed: false,
+    address: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+    data: '0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000047468656500000000000000000000000000000000000000000000000000000000',
+    topics: [
+      '0x319b9e64f64b033d6b8102f9688735cefac53d266b6e85d21cf85e9856fc7b99'
+    ],
+    index: 0,
+    transactionIndex: 0,
+    interface: Interface {
+      fragments: [Array],
+      deploy: [ConstructorFragment],
+      fallback: null,
+      receive: false
+    },
+    fragment: EventFragment {
+      type: 'event',
+      inputs: [Array],
+      name: 'myEventTest',
+      anonymous: false
+    },
+    args: Result(1) [ 'thee' ]
+  },
+  args: Result(1) [ 'thee' ],
+  fragment: EventFragment {
+    type: 'event',
+    inputs: [ [ParamType] ],
+    name: 'myEventTest',
+    anonymous: false
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
